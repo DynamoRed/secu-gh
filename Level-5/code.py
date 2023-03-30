@@ -17,9 +17,8 @@ class Random_generator:
 
     # generates salt
     def generate_salt(self, rounds=22):
-        first_phrase = ''.join(str(random.randint(0,9)) for i in range(rounds))
-        second_phase = '$2b$12$' + first_phrase
-        return second_phase.encode()
+        salt = bcrypt.gensalt()
+        return salt
 
 class SHA256_hasher:
 
@@ -48,5 +47,5 @@ class MD5_hasher:
 # a collection of sensitive secrets necessary for the software to operate
 PRIVATE_KEY = os.environ.get('PRIVATE_KEY')
 PUBLIC_KEY = os.environ.get('PUBLIC_KEY')
-SECRET_KEY = 'TjWnZr4u7x!A%D*G-KaPdSgVkXp2s5v8'
-PASSWORD_HASHER = 'MD5_hasher'
+SECRET_KEY = os.environ.get('SECRET_KEY')
+PASSWORD_HASHER = 'SHA256_hasher'
